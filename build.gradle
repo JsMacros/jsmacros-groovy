@@ -1,0 +1,85 @@
+plugins {
+    id 'maven-publish'
+    id 'java'
+}
+
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+archivesBaseName = project.archives_base_name
+version = project.property("version")
+group = project.maven_group
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+        metadataSources {
+            artifact()
+        }
+    }
+}
+
+configurations {
+    jsmacrosExtensionInclude
+}
+
+
+dependencies {
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha7'
+    implementation 'com.google.code.gson:gson:2.9.0'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.0-alpha7'
+    implementation 'javassist:javassist:3.12.1.GA'
+    implementation "com.github.jsmacros.jsmacros:jsmacros-1.19:${project.jsmacros_version}"
+
+    implementation "org.codehaus.groovy:groovy-all:3.0.12"
+    jsmacrosExtensionInclude "org.codehaus.groovy:groovy-all:3.0.12"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation 'org.jetbrains:annotations:16.0.2'
+}
+
+processResources {
+    filesMatching("jsmacros.ext.groovy.json") {
+        expand "dependencies": configurations.jsmacrosExtensionInclude.files.collect { it.name }.join(" ")
+    }
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+    def targetVersion = 8
+    if (JavaVersion.current().isJava9Compatible()) {
+        it.options.release = targetVersion
+    }
+}
+
+compileTestJava {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    options.release.set(17)
+}
+
+jar {
+    from "LICENSE"
+    from (configurations.jsmacrosExtensionInclude.files) {
+        include '*'
+        into "META-INF/jsmacrosdeps"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// configure the maven publication
+publishing {
+    publications {
+    }
+    repositories {
+    }
+}
