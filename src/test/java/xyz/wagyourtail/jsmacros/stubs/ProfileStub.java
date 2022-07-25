@@ -45,6 +45,7 @@ public class ProfileStub extends BaseProfile {
 
     @Override
     public void logError(Throwable ex) {
+        runner.wrapException(ex);
         LOGGER.error("", ex);
     }
 

@@ -56,7 +56,7 @@ public class FWrapper extends PerExecLanguageLibrary<GroovyShell, GroovyScriptCo
                 try {
                     fn.call(args);
                 } catch (Throwable e) {
-                    Core.getInstance().profile.logError(e);
+                    Core.getInstance().profile.logError(new GroovyLanguageDescription.GroovyRuntimeException(e, ctx.getFile()));
                 } finally {
                     ctx.releaseBoundEventIfPresent(Thread.currentThread());
                     ctx.unbindThread(Thread.currentThread());
@@ -79,7 +79,7 @@ public class FWrapper extends PerExecLanguageLibrary<GroovyShell, GroovyScriptCo
                 }
                 return fn.call(args);
             } catch (Throwable ex) {
-                throw new RuntimeException(ex);
+                throw new RuntimeException(new GroovyLanguageDescription.GroovyRuntimeException(ex, ctx.getFile()));
             } finally {
                 ctx.releaseBoundEventIfPresent(Thread.currentThread());
                 ctx.unbindThread(Thread.currentThread());
