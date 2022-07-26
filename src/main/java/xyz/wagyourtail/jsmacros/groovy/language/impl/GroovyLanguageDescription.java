@@ -33,7 +33,7 @@ public class GroovyLanguageDescription extends BaseLanguage<GroovyShell, GroovyS
             runGroovyShell(eventContainer, (shell) -> {
                 shell.setProperty("event", baseEvent);
                 shell.setProperty("file", eventContainer.getCtx().getFile());
-                shell.setProperty("context", eventContainer);
+                shell.setProperty("ctx", eventContainer);
 
                 try {
                     shell.evaluate(eventContainer.getCtx().getFile());
@@ -54,7 +54,7 @@ public class GroovyLanguageDescription extends BaseLanguage<GroovyShell, GroovyS
             runGroovyShell(eventContainer, (shell) -> {
                 shell.setProperty("event", baseEvent);
                 shell.setProperty("file", eventContainer.getCtx().getFile());
-                shell.setProperty("context", eventContainer);
+                shell.setProperty("ctx", eventContainer);
 
                 shell.evaluate(script);
             });
