@@ -34,8 +34,8 @@ dependencies {
     implementation 'javassist:javassist:3.12.1.GA'
     implementation "com.github.jsmacros.jsmacros:jsmacros-1.19:${project.jsmacros_version}"
 
-    implementation "org.codehaus.groovy:groovy-all:3.0.12"
-    jsmacrosExtensionInclude "org.codehaus.groovy:groovy-all:3.0.12"
+    implementation "org.apache.groovy:groovy-all:4.0.4"
+    jsmacrosExtensionInclude "org.apache.groovy:groovy-all:4.0.4"
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
